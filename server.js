@@ -12,13 +12,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //mongo db connection
 app.use(express.static('public'));
-const url = "mongodb://localhost/workout";
-mongoose.connect(url, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/workout',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
+
 
 // routes
 app.use(require('./routes/api.js'));
